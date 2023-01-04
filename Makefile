@@ -25,10 +25,10 @@ endif
 
 all : windows linux
 
-windows : obj/main.obj
+windows : obj/main.obj obj/abr.obj
 	$(WCC) $(CFLAGS) -o $(OUTDIR)/$(OUTFILE).exe $^
 
-linux : obj/main.o
+linux : obj/main.o obj/abr.o
 	$(LCC) $(CFLAGS) -o $(OUTDIR)/$(OUTFILE).out $^
 
 clean :
@@ -38,8 +38,14 @@ clean :
 	$(DEL) $(OBJDIR)$(SEP)*.obj
 	@echo "Cleaned"
 
-obj/main.o : src/main.cpp
+obj/main.o : src/main.cpp header/abr.h
 	$(LCC) $(CFLAGS) -o $@ -c $<
 
-obj/main.obj : src/main.cpp
+obj/main.obj : src/main.cpp header/abr.h
+	$(WCC) $(CFLAGS) -o $@ -c $<
+
+obj/abr.o : src/abr.cpp header/abr.h
+	$(LCC) $(CFLAGS) -o $@ -c $<
+
+obj/abr.obj : src/abr.cpp header/abr.h
 	$(WCC) $(CFLAGS) -o $@ -c $<

@@ -10,10 +10,19 @@
  */
 
 #include <iostream>
+#include <fstream>
+#include <string>
+
+#include "../header/abr.h"
 
 int main(int argc, char *argv[])
 {
-    std::cout << "Hello World!" << std::endl;
+    std::cout << "\t\t-----Phrase lookup-----" << std::endl;
+    if (argc == 1)
+    {
+        std::cerr << "Usage: " << argv[0] << " <file> <phrase>" << std::endl;
+        return EXIT_SUCCESS;
+    }
     return EXIT_SUCCESS;
 }
 
