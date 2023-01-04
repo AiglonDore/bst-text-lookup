@@ -15,6 +15,12 @@
 
 #include "../header/abr.h"
 
+/**
+ * @brief Split a string into a vector of words.
+ * 
+ * @param str String to split.
+ * @param vec Vector to fill.
+ */
 void splitString(const std::string &str, std::vector<std::string> &vec)
 {
     std::string word;
@@ -32,7 +38,13 @@ void splitString(const std::string &str, std::vector<std::string> &vec)
     }
     vec.push_back(word);
 }
-
+/**
+ * @brief Main function.
+ * 
+ * @param argc Number of arguments.
+ * @param argv Arguments.
+ * @return int Exit code.
+ */
 int main(int argc, char *argv[])
 {
     std::cout << "\t\t-----Phrase lookup-----" << std::endl;
