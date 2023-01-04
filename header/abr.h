@@ -16,6 +16,7 @@
 #include <vector>
 #include <exception>
 #include <stdexcept>
+#include <algorithm>
 
 /**
  * @brief ABR structure.

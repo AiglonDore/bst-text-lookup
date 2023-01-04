@@ -37,7 +37,12 @@ bool ABR::isPresent(const std::string& word) const
 
 void ABR::add(const std::string& word, unsigned int line)
 {
-    if (this->word == word)
+    if (this->word.empty())
+    {
+        this->word = word;
+        lines.push_back(line);
+    }
+    else if (this->word == word)
     {
         lines.push_back(line);
     }
@@ -64,10 +69,51 @@ const std::vector<unsigned int>& ABR::operator[](const std::string& word) const
 std::vector<unsigned int> ABR::operator[](const std::vector<std::string>& words) const
 {
     std::vector<unsigned int> lines;
-    
+    std::vector<std::vector<unsigned int>> linesList;
+    for (const std::string& word : words)
+    {
+        linesList.push_back((*this)[word]);
+    }
+    for (const unsigned int& line : linesList[0])
+    {
+        bool everywhere = true;
+
+        for (size_t i = 1; i < linesList.size(); i++)
+        {
+            if (std::find(linesList[i].begin(), linesList[i].end(), line) == linesList[i].end())
+            {
+                everywhere = false;
+                break;
+            }
+        }
+
+        if (everywhere) lines.push_back(line);
+    }
+    return lines;
 }
 
 std::vector<unsigned int> ABR::operator[](std::vector<std::string>&& words) const
 {
-    
+    std::vector<unsigned int> lines;
+    std::vector<std::vector<unsigned int>> linesList;
+    for (const std::string& word : words)
+    {
+        linesList.push_back((*this)[word]);
+    }
+    for (const unsigned int& line : linesList[0])
+    {
+        bool everywhere = true;
+
+        for (size_t i = 1; i < linesList.size(); i++)
+        {
+            if (std::find(linesList[i].begin(), linesList[i].end(), line) == linesList[i].end())
+            {
+                everywhere = false;
+                break;
+            }
+        }
+
+        if (everywhere) lines.push_back(line);
+    }
+    return lines;
 }
