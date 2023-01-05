@@ -40,10 +40,18 @@ void ABR::add(const std::string& word, unsigned int line)
     if (this->word.empty())
     {
         this->word = word;
+        for (const unsigned int& nbLine : lines)
+        {
+            if (nbLine == line) return;
+        }
         lines.push_back(line);
     }
     else if (this->word == word)
     {
+        for (const unsigned int& nbLine : lines)
+        {
+            if (nbLine == line) return;
+        }
         lines.push_back(line);
     }
     else if (this->word > word)

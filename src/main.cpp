@@ -16,6 +16,30 @@
 #include "../header/abr.h"
 
 /**
+ * @brief Split a line into a vector of phrases.
+ * 
+ * @param str String to split.
+ * @param vec Vector to fill.
+ */
+void splitPhrase(const std::string &str, std::vector<std::string> &vec)
+{
+    std::string word;
+    for (const auto &x : str)
+    {
+        if (x == '.' || x == '!' || x == '?')
+        {
+            vec.push_back(word);
+            word = "";
+        }
+        else
+        {
+            word.push_back(x);
+        }
+    }
+    vec.push_back(word);
+}
+
+/**
  * @brief Split a string into a vector of words.
  * 
  * @param str String to split.
@@ -81,13 +105,20 @@ int main(int argc, char *argv[])
 
         while (std::getline(file, line))
         {
-            std::vector<std::string> words;
-            splitString(line, words);
-            for (const auto &word : words)
+            if (line[line.size() - 1 ] == '\n') line.pop_back();
+            if (line[line.size() - 1 ] == '\r') line.pop_back();
+            std::vector<std::string> phrases, words;
+            splitPhrase(line, phrases);
+            for (const std::string& phrase : phrases)
             {
-                abr.add(word, nbLine);
+                words.clear();
+                splitString(phrase, words);
+                for (const auto &word : words)
+                {
+                    abr.add(word, nbLine);
+                }
+                nbLine++;
             }
-            nbLine++;
         }
 
         std::vector<std::string> phraseWords;
